@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension point="org.eclipse.ui.views">
+      <view
+            name="EditorViewer"
+            icon="icons/editor_view.gif"
+            category="org.eclipse.ui"
+            class="org.un4given.editorviewer.views.EditorViewer"
+            id="org.un4given.editorviewer.views.EditorViewer">
+      </view>
+   </extension>
+
+</plugin>
