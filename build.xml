@@ -4,7 +4,7 @@ Licensed under GPL v2 or later
 -->
 <project name="EditorViewer" default="all">
 
-    <property name="version" value="0.1.6.1"/>
+    <property name="version" value="0.1.6.2"/>
 
     <property name="src.dir" value="."/>
     <property name="build.dir" value="build"/>
