@@ -19,15 +19,18 @@
  */
 package org.un4given.editorviewer.views;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.collections.map.MultiValueMap;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.model.WorkbenchContentProvider;
 import org.un4given.EditorViewerPlugin;
-import org.un4given.editorviewer.util.MultiHashMap;
 
 /**
  * Content Provider for the TreeViewer
@@ -43,11 +46,11 @@ public class EditorViewerContentProvider extends WorkbenchContentProvider {
 	private int layout = HIER_LAYOUT;
 	private EditorViewer _viewer = null;
 	
-	private MultiHashMap cache = null;
+	private MultiValueMap cache = null;
 	private boolean filterDirty = false;
 	
 	public EditorViewerContentProvider(EditorViewer viewer){
-		this.cache = new MultiHashMap();
+		this.cache = MultiValueMap.decorate(new HashMap(), HashSet.class);
 		this._viewer = viewer;
 		refresh();
 	}
