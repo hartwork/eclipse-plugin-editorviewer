@@ -162,6 +162,6 @@ public class EditorViewerActionGroup extends MainActionGroup  {
 					layoutType = layoutInt;
 			}
 		} catch (NumberFormatException e) {}
-		_layoutItemsAction.setSelection(layoutType);
+		_layoutItemsAction.setLayout(layoutType);
 	}		
 }

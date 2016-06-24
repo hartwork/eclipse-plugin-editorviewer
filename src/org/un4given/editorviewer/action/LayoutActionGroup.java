@@ -37,7 +37,7 @@ import org.un4given.editorviewer.views.EditorViewerContentProvider;
  * @author Sean Ruff
  */
 
-public class LayoutActionGroup extends MultiActionGroup {
+public class LayoutActionGroup extends MultiActionGroupWithLayout {
 	
 	/**
 	 * Constructor
@@ -104,7 +104,7 @@ public class LayoutActionGroup extends MultiActionGroup {
 
 
 	public int getLayoutMode(){
-		return this.getSelection();
+		return this.getLayout();
 	}
 
 }
