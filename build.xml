@@ -1,0 +1,66 @@
+<!--
+Copyright (C) 2016 Sebastian Pipping <sebastian@pipping.org>
+Licensed under GPL v2 or later
+-->
+<project name="EditorViewer" default="all">
+
+    <property name="version" value="0.1.6"/>
+
+    <property name="src.dir" value="."/>
+    <property name="build.dir" value="build"/>
+    <property name="jar.name" value="${ant.project.name}-${version}.jar"/>
+
+    <property environment="env"/>
+    <property name="env.ECLIPSE_PLUGINS_PATH" value=""/>
+
+
+    <path id="eclipse.plugins.dir">
+        <fileset dir="${env.ECLIPSE_PLUGINS_PATH}" includes="**/*.jar"/>
+    </path>
+
+
+    <target name="clean">
+        <delete dir="build"/>
+    </target>
+
+    <target name="eclipse-plugins-path">
+        <fail unless="env.ECLIPSE_PLUGINS_PATH"
+              message="Environment variable ECLIPSE_PLUGINS_PATH is not set"/>
+    </target>
+
+    <target name="compile" depends="eclipse-plugins-path">
+        <mkdir dir="${build.dir}/classes"/>
+        <javac srcdir="${src.dir}/src" destdir="${build.dir}/classes"
+               classpathref="eclipse.plugins.dir" includeantruntime="false"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${build.dir}/jar"/>
+        <jar destfile="${build.dir}/jar/${jar.name}">
+            <manifest>
+                <attribute name="Bundle-ManifestVersion" value="2"/>
+                <attribute name="Bundle-Name" value="EditorViewer Plug-in"/>
+                <attribute name="Bundle-SymbolicName" value="EditorViewer; singleton:=true"/>
+                <attribute name="Bundle-Version" value="${version}"/>
+                <attribute name="Bundle-Activator" value="org.un4given.EditorViewerPlugin"/>
+                <attribute name="Bundle-Localization" value="plugin"/>
+                <attribute name="Require-Bundle" value="org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.core.resources,org.eclipse.jdt.ui,org.eclipse.ui.ide"/>
+                <attribute name="Eclipse-AutoStart" value="true"/>
+            </manifest>
+
+            <fileset dir="${build.dir}/classes"/>
+            <zipfileset dir="${src.dir}/icons" prefix="icons"/>
+            <zipfileset dir="${src.dir}/org" prefix="org"/>
+            <fileset dir="${src.dir}" includes="plugin.xml"/>
+
+            <zipfileset dir="${src.dir}/src" prefix="src"/>
+        </jar>
+    </target>
+
+    <target name="all" depends="jar" />
+
+    <target name="install" depends="all,eclipse-plugins-path">
+        <copy file="${build.dir}/jar/${jar.name}" todir="${env.ECLIPSE_PLUGINS_PATH}"/>
+    </target>
+
+</project>
